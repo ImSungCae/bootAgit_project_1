@@ -1,4 +1,4 @@
-package com.bootagit_project_1.config;
+package com.bootagit_project_1.utils;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

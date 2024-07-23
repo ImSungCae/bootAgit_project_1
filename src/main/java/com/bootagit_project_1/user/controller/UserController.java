@@ -1,16 +1,19 @@
 package com.bootagit_project_1.user.controller;
 
 
-import com.bootagit_project_1.config.SecurityUtil;
+import com.bootagit_project_1.jwt.JwtTokenProvider;
+import com.bootagit_project_1.utils.SecurityUtil;
 import com.bootagit_project_1.jwt.JwtToken;
 import com.bootagit_project_1.user.entity.LoginDto;
-import com.bootagit_project_1.user.entity.User;
+import com.bootagit_project_1.user.entity.RegisterDto;
+import com.bootagit_project_1.user.entity.UserDto;
 import com.bootagit_project_1.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,18 +22,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     private final UserService userService;
-
-    @GetMapping("/register")
-    public ModelAndView registerUser(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("view/user/register.html");
-        return modelAndView;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@ModelAttribute User user) {
-        userService.saveUser(user);
-        return ResponseEntity.ok("User registered successfully.");
+    public ResponseEntity<UserDto> registerUser(@RequestBody RegisterDto registerDto) {
+        UserDto userDto = userService.registerUser(registerDto);
+        return ResponseEntity.ok(userDto);
     }
 
     @PostMapping("/login")
@@ -41,6 +38,13 @@ public class UserController {
         log.info("request username = {}, password = {}", username, password);
         log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
         return jwtToken;
+    }
+
+
+    @GetMapping("/profile")
+    public UserDto getUserProfile(Authentication authentication) {
+        String username = authentication.getName();
+        return userService.getUserProfile(username);
     }
 
     @PostMapping("/test")

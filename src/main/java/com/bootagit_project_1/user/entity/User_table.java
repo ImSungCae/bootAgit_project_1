@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
-public class User implements UserDetails {
+public class User_table implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
