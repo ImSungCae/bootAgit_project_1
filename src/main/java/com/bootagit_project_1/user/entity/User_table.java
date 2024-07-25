@@ -37,6 +37,14 @@ public class User_table implements UserDetails {
     @Email(message = "Email should be valid")
     private String email;
 
+    public void setEmail(@NotNull @Email(message = "Email should be valid") String email) {
+        this.email = email;
+    }
+
+    public void setPassword(@NotNull @Size(min = 6, message = "Password should have at least 6 characters") String password) {
+        this.password = password;
+    }
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();

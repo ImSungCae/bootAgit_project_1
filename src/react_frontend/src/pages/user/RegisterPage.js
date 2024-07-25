@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {register} from "./AuthAPI";
+import {register} from "../api/AuthAPI";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function RegisterPage() {
@@ -26,8 +26,9 @@ export default function RegisterPage() {
 
     }
     return (
-        <div className="d-flex justify-content-center" style={{minHeight: "100vh"}}>
+        <div className="d-flex justify-content-center" style={{minHeight: "80vh"}}>
             <div className="align-self-center">
+                <h1 className="text-center">회원가입</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group" style={{minWidth: "25vw"}}>
                         <label htmlFor="username">아이디</label>
@@ -47,7 +48,7 @@ export default function RegisterPage() {
                                onChange={handleChange}
                                value={values.email}/>
                     </div>
-                    <div className="form-group" style={{minWidth: "25vw"}}>
+                    <div className="form-group" style={{minWidth: "25vw", marginTop: "1vw"}}>
                         <button type="submit" style={{width: "100%"}}>회원가입</button>
                     </div>
                 </form>

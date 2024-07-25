@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {login} from "./AuthAPI";
+import {login} from "../api/AuthAPI";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function LoginPage(){
@@ -31,8 +31,9 @@ export default function LoginPage(){
     }
 
     return (
-            <div className="d-flex justify-content-center" style={{minHeight: "100vh"}}>
+            <div className="d-flex justify-content-center" style={{minHeight: "80vh"}}>
                 <div className="align-self-center">
+                    <h1 className="text-center">로그인</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group" style={{minWidth: "25vw"}}>
                             <label htmlFor="username">아이디</label>
@@ -44,7 +45,7 @@ export default function LoginPage(){
                             <input type="password" className="form-control" id="password" name="password" required
                                    onChange={handleChange} value={values.password}/>
                         </div>
-                        <div className="form-group" style={{minWidth: "25vw"}}>
+                        <div className="form-group" style={{minWidth: "25vw" , marginTop: "1vw"}}>
                             <button type="submit" style={{width: "100%"}}>로그인</button>
                         </div>
                     </form>

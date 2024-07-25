@@ -1,11 +1,11 @@
 package com.bootagit_project_1.jwt;
 
+import com.bootagit_project_1.user.service.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -71,7 +71,6 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String accessToken){
         // JWT 토큰 복호화
         Claims claims = parseClaims(accessToken);
-        System.out.println("Claims : " + claims);
         if(claims.get("auth") == null){
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }

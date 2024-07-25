@@ -1,4 +1,4 @@
-package com.bootagit_project_1.user.entity;
+package com.bootagit_project_1.user.dto;
 
 import lombok.*;
 

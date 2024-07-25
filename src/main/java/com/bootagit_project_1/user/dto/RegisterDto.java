@@ -1,5 +1,6 @@
-package com.bootagit_project_1.user.entity;
+package com.bootagit_project_1.user.dto;
 
+import com.bootagit_project_1.user.entity.User_table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

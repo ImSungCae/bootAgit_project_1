@@ -1,19 +1,17 @@
 package com.bootagit_project_1;
 
 import com.bootagit_project_1.jwt.JwtToken;
-import com.bootagit_project_1.user.controller.UserController;
-import com.bootagit_project_1.user.entity.LoginDto;
-import com.bootagit_project_1.user.entity.RegisterDto;
-import com.bootagit_project_1.user.entity.UserDto;
-import com.bootagit_project_1.user.service.UserService;
+import com.bootagit_project_1.user.controller.AuthRestController;
+import com.bootagit_project_1.user.dto.LoginDto;
+import com.bootagit_project_1.user.dto.RegisterDto;
+import com.bootagit_project_1.user.dto.UserDto;
+import com.bootagit_project_1.user.service.AuthService;
 import com.bootagit_project_1.utils.DatabaseCleanUp;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -28,7 +26,7 @@ class BootAgitProject1ApplicationTests {
     @Autowired
     DatabaseCleanUp databaseCleanUp;
     @Autowired
-    UserService userService;
+    AuthService authService;
     @Autowired
     TestRestTemplate testRestTemplate;
     @LocalServerPort
@@ -36,7 +34,7 @@ class BootAgitProject1ApplicationTests {
 
     private RegisterDto registerDto;
     @Autowired
-    private UserController userController;
+    private AuthRestController authRestController;
 
     // 각 테스트 케이스 전에 실행되어 회원 등록을 위한 registerDto 객체 생성
     @BeforeEach
@@ -71,13 +69,13 @@ class BootAgitProject1ApplicationTests {
 
     @Test
     public void loginTest(){
-        userService.registerUser(registerDto);
+        authService.registerUser(registerDto);
         LoginDto loginDto = LoginDto.builder()
                 .username("test_user")
                 .password("12345678")
                 .build();
         // 로그인 요청
-        JwtToken jwtToken = userController.loginUser(loginDto);
+        JwtToken jwtToken = authRestController.loginUser(loginDto);
 
         // HttpHeaders 객체 생성 및 토큰 추가
         HttpHeaders httpHeaders = new HttpHeaders();
