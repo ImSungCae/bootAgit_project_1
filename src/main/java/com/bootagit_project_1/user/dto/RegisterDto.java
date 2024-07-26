@@ -1,6 +1,6 @@
 package com.bootagit_project_1.user.dto;
 
-import com.bootagit_project_1.user.entity.User_table;
+import com.bootagit_project_1.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,8 +21,8 @@ public class RegisterDto {
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
-    public User_table toEntity(String encodedPassword, List<String> roles){
-        return User_table.builder()
+    public User toEntity(String encodedPassword, List<String> roles){
+        return User.builder()
                 .username(username)
                 .password(encodedPassword)
                 .email(email)

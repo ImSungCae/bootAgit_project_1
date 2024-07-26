@@ -1,7 +1,7 @@
 package com.bootagit_project_1.user.service;
 
 import com.bootagit_project_1.user.dto.UserDto;
-import com.bootagit_project_1.user.entity.User_table;
+import com.bootagit_project_1.user.entity.User;
 import com.bootagit_project_1.user.repository.UserRepository;
 import com.bootagit_project_1.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class UserService {
     /* USER 조회 */
     @Transactional
     public UserDto getUserProfile(String username){
-        User_table user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(()-> new RuntimeException("사용자를 찾을 수 없습니다."));
         return UserDto.toDto(user);
     }
@@ -26,7 +26,7 @@ public class UserService {
     /* 패스워드 변경 */
     @Transactional
     public UserDto changeUserPassword(String oldPassword, String newPassword){
-        User_table user = userRepository.findByUsername(SecurityUtil.getCurrentUsername())
+        User user = userRepository.findByUsername(SecurityUtil.getCurrentUsername())
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
         if (!passwordEncoder.matches(oldPassword, user.getPassword())){
             throw new RuntimeException("비밀번호가 맞지 않습니다.");
@@ -39,7 +39,7 @@ public class UserService {
     /* 이메일 변경 */
     @Transactional
     public UserDto changeUserEmail(String newEmail){
-        User_table user = userRepository.findByUsername(SecurityUtil.getCurrentUsername())
+        User user = userRepository.findByUsername(SecurityUtil.getCurrentUsername())
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
         user.setEmail(newEmail);
         return UserDto.toDto(userRepository.save(user));
@@ -48,7 +48,7 @@ public class UserService {
     /* 회원 탈퇴 */
     @Transactional
     public void deleteUserByUsername(String username){
-        User_table user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(()-> new RuntimeException("사용자를 찾을 수 없습니다. username = "+ username));
         this.userRepository.delete(user);
 

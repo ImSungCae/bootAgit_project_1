@@ -1,6 +1,5 @@
 package com.bootagit_project_1.user.controller;
 
-import com.bootagit_project_1.jwt.JwtTokenProvider;
 import com.bootagit_project_1.user.dto.ChangePasswordDto;
 import com.bootagit_project_1.user.dto.UserDto;
 import com.bootagit_project_1.user.service.UserService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user")
 public class UserRestController {
     private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
 
     /* 회원정보 조회 API */
     @GetMapping("/profile")

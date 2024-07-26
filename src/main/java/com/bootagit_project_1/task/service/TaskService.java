@@ -3,7 +3,7 @@ package com.bootagit_project_1.task.service;
 import com.bootagit_project_1.task.dto.TaskDto;
 import com.bootagit_project_1.task.entity.Task;
 import com.bootagit_project_1.task.repository.TaskRepository;
-import com.bootagit_project_1.user.entity.User_table;
+import com.bootagit_project_1.user.entity.User;
 import com.bootagit_project_1.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public List<TaskDto> getTasks(String username) {
-        User_table user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다. username = " + username));
         return taskRepository.findByUserId(user.getId()).stream()
                 .map(TaskDto::fromEntity)
@@ -29,7 +29,7 @@ public class TaskService {
 
     @Transactional
     public TaskDto createTask(String username, TaskDto taskDto) {
-        User_table user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다. username = " + username));
         Task task = TaskDto.toEntity(taskDto, user);
         return TaskDto.fromEntity(taskRepository.save(task));
@@ -37,7 +37,7 @@ public class TaskService {
 
     @Transactional
     public TaskDto updateTask(String username, Long taskId, TaskDto taskDto) {
-        User_table user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다. username = " + username));
         Task existingTask = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("할 일을 찾을 수 없습니다. id = " + taskId));
@@ -58,7 +58,7 @@ public class TaskService {
 
     @Transactional
     public void deleteTask(String username, Long taskId) {
-        User_table user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다. username = " + username));
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("할 일을 찾을 수 없습니다. id = " + taskId));

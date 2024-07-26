@@ -1,7 +1,7 @@
 package com.bootagit_project_1.task.dto;
 
 import com.bootagit_project_1.task.entity.Task;
-import com.bootagit_project_1.user.entity.User_table;
+import com.bootagit_project_1.user.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,7 +28,7 @@ public class TaskDto {
                 .build();
     }
 
-    public static Task toEntity(TaskDto dto, User_table user) {
+    public static Task toEntity(TaskDto dto, User user) {
         return Task.builder()
                 .id(dto.getId())
                 .title(dto.getTitle())

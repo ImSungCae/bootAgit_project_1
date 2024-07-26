@@ -1,8 +1,8 @@
 package com.bootagit_project_1.config;
 
+import com.bootagit_project_1.config.security.CustomUserDetailsService;
 import com.bootagit_project_1.jwt.JwtAuthenticationFilter;
 import com.bootagit_project_1.jwt.JwtTokenProvider;
-import com.bootagit_project_1.user.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,13 +15,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -91,4 +86,7 @@ public class SecurityConfig {
             }
         };
     }
+
+
+
 }

@@ -1,6 +1,6 @@
 package com.bootagit_project_1.user.dto;
 
-import com.bootagit_project_1.user.entity.User_table;
+import com.bootagit_project_1.user.entity.User;
 import lombok.*;
 
 @Getter
@@ -14,7 +14,7 @@ public class UserDto {
     private String password;
     private String email;
 
-    static public UserDto toDto(User_table user) {
+    static public UserDto toDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
@@ -22,8 +22,8 @@ public class UserDto {
                 .email(user.getEmail())
                 .build();
     }
-    public User_table toEntity() {
-        return User_table.builder()
+    public User toEntity() {
+        return User.builder()
                 .id(getId())
                 .username(getUsername())
                 .password(getPassword())

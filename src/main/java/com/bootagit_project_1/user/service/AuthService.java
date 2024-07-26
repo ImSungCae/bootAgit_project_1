@@ -27,6 +27,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
+
     public UserDto registerUser(RegisterDto registerDto){
         if(userRepository.existsByUsername(registerDto.getUsername())){
             throw new IllegalArgumentException("이미 사용 중인 사용자 이름입니다.");
@@ -45,7 +46,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 
 
-        // 2. 실제 검증. authenticate() 메서드를 통해 요청된 Member 에 대한 검증 진행
+        // 2. 실제 검증. authenticate() 메서드를 통해 요청된 User 에 대한 검증 진행
         // authenticate 메서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
