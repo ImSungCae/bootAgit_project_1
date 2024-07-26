@@ -27,13 +27,13 @@ export default function NavBar() {
                     </Nav>
                     <Nav>
                         <NavDropdown title="메뉴" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href={`/task/${username}`}>할 일</NavDropdown.Item>
-                            <NavDropdown.Item href="/">채팅</NavDropdown.Item>
+                            <NavDropdown.Item href={token? "/task" : "/login"}>할 일</NavDropdown.Item>
+                            <NavDropdown.Item href={token? "/" : "/login"}>채팅</NavDropdown.Item>
                         </NavDropdown>
 
                         {token ?
                             <NavDropdown title={username + "님 환영합니다."} id="collasible-nav-dropdown">
-                                <NavDropdown.Item href="/profile/">프로필</NavDropdown.Item>
+                                <NavDropdown.Item href="/profile">프로필</NavDropdown.Item>
                                 <NavDropdown.Item href="/" onClick={handleLogout}>로그아웃</NavDropdown.Item>
                             </NavDropdown>
                             :

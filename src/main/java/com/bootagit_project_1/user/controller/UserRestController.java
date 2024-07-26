@@ -15,12 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserRestController {
     private final UserService userService;
 
-    /* 회원정보 조회 API */
-    @GetMapping("/profile")
-    public UserDto findUser(Authentication authentication) {
-        String username = authentication.getName();
-        return userService.getUserProfile(username);
-    }
 
     /* 패스워드 변경 API */
     @PostMapping("/password")
