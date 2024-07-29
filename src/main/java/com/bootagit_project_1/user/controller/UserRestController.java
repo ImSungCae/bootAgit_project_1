@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserRestController {
     private final UserService userService;
 
-
     /* 패스워드 변경 API */
     @PostMapping("/password")
     public ResponseEntity<UserDto> setUserPassword(@RequestBody ChangePasswordDto request) {
@@ -34,7 +33,5 @@ public class UserRestController {
         userService.deleteUserByUsername(username);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
-
-
 
 }

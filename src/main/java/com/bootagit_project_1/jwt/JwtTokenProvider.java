@@ -110,7 +110,7 @@ public class JwtTokenProvider {
 
         // UserDetails 객체를 만들어 Authentication return
         // UserDetails interface, User: UserDetails 를 구현한 class
-        UserDetails principal = new org.springframework.security.core.userdetails.User(claims.getSubject(),"",authorities);
+        UserDetails principal = MyUserDetails.create((String)claims.get("username"),null,authorities);
         log.info("Authentication 객체 생성 : {}", principal);
         return new UsernamePasswordAuthenticationToken(principal,"",authorities);
 
@@ -148,9 +148,5 @@ public class JwtTokenProvider {
             return e.getClaims();
         }
     }
-
-
-    
-    
 
 }

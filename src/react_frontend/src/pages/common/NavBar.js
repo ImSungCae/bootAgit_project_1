@@ -28,7 +28,7 @@ export default function NavBar() {
                     <Nav>
                         <NavDropdown title="메뉴" id="collasible-nav-dropdown">
                             <NavDropdown.Item href={token? "/task" : "/login"}>할 일</NavDropdown.Item>
-                            <NavDropdown.Item href={token? "/" : "/login"}>채팅</NavDropdown.Item>
+                            <NavDropdown.Item href={token? "/chat" : "/login"}>채팅</NavDropdown.Item>
                         </NavDropdown>
 
                         {token ?
