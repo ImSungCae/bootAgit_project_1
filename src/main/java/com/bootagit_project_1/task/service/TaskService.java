@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,8 @@ public class TaskService {
                 .createdAt(existingTask.getCreatedAt())
                 .updatedAt(taskDto.getUpdatedAt())
                 .completed(taskDto.isCompleted())
+                .dueDate(taskDto.getDueDate())
+                .completedDate(taskDto.isCompleted() ? LocalDate.now() : null)
                 .build();
         return TaskDto.fromEntity(taskRepository.save(updatedTask));
     }

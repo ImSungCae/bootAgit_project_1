@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useUser } from '../common/AuthContext';
 import { fetchTasks, createTask, updateTask, deleteTask } from '../api/TaskAPI';
 import { Button, Form, Modal, Table, Container, InputGroup, FormControl, Dropdown, Pagination } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const TaskPage = () => {
     const { authState } = useUser();
     const { username } = authState;
     const [tasks, setTasks] = useState([]);
-    const [newTask, setNewTask] = useState({ title: '', description: '' });
+    const [newTask, setNewTask] = useState({ title: '', description: '', dueDate : new Date() });
     const [show, setShow] = useState(false);
     const [editTask, setEditTask] = useState(null);
     const [filter, setFilter] = useState('all');
@@ -25,9 +27,9 @@ const TaskPage = () => {
 
     const handleAddTask = async () => {
         try {
-            const task = await createTask(newTask, username);
+            const task = await createTask({ ...newTask, dueDate: newTask.dueDate.toISOString().split('T')[0]}, username);
             setTasks([...tasks, task]);
-            setNewTask({ title: '', description: '' });
+            setNewTask({ title: '', description: '' , dueDate: new Date()});
             setShow(false);
         } catch (error) {
             console.log("할 일을 생성하는 데 실패했습니다.", error.response ? error.response.data : error.message);
@@ -36,7 +38,10 @@ const TaskPage = () => {
 
     const handleUpdateTask = async () => {
         try {
-            const updatedTask = await updateTask(editTask.id, editTask, username);
+            const updatedTask = await updateTask(editTask.id, {
+                ...editTask,
+                dueDate: editTask.dueDate instanceof Date ? editTask.dueDate.toISOString().split('T')[0] : editTask.dueDate
+            }, username);
             setTasks(tasks.map((task) => (task.id === editTask.id ? updatedTask : task)));
             setEditTask(null);
             setShow(false);
@@ -111,9 +116,10 @@ const TaskPage = () => {
                 <tr>
                     <th>#</th>
                     <th>제목</th>
-                    <th style={{ width: '30%' }}>할 일</th>
+                    <th style={{width: '30%'}}>할 일</th>
                     <th>생성 날짜</th>
-                    <th>수정 날짜</th>
+                    <th>마감 날짜</th>
+                    <th>남은 일수 / 걸린 일수</th>
                     <th>상태</th>
                     <th>액션</th>
                 </tr>
@@ -122,15 +128,21 @@ const TaskPage = () => {
                 {currentTasks.length > 0 ? (
                     currentTasks.map((task, index) => (
                         <tr key={task.id} className={task.completed ? 'table-success' : ''}>
-                            <td>{filteredTasks.length - (indexOfFirstTask + index)}</td> {/* 역순 번호 매기기 */}
+                            <td>{filteredTasks.length - (indexOfFirstTask + index)}</td>
+                            {/* 역순 번호 매기기 */}
                             <td>{task.title}</td>
                             <td>{task.description}</td>
                             <td>{task.createdAt ? formatDate(task.createdAt) : '없음'}</td>
-                            <td>{task.updatedAt ? formatDate(task.updatedAt) : '없음'}</td>
+                            <td>{task.dueDate ? formatDate(task.dueDate) : '없음'}</td>
+                            <td>
+                                {task.completed
+                                    ? `완료까지 ${task.daysUntilDue}일 걸림`
+                                    : `${task.daysUntilDue}일 남음`}
+                            </td>
                             <td>{task.completed ? '완료' : '미완료'}</td>
                             <td>
                                 <Button variant="warning" onClick={() => {
-                                    setEditTask(task);
+                                    setEditTask({...task, dueDate: new Date(task.dueDate)});
                                     setShow(true);
                                 }}>수정</Button>{' '}
                                 <Button variant="danger" onClick={() => handleDeleteTask(task.id)}>삭제</Button>
@@ -139,7 +151,7 @@ const TaskPage = () => {
                     ))
                 ) : (
                     <tr>
-                        <td colSpan="7">할 일이 없습니다.</td>
+                        <td colSpan="8">할 일이 없습니다.</td>
                     </tr>
                 )}
                 </tbody>
@@ -184,6 +196,18 @@ const TaskPage = () => {
                                 }
                             />
                         </Form.Group>
+                        <Form.Group className="mt-3">
+                            <Form.Label>마감 날짜</Form.Label>
+                            <DatePicker
+                                selected={editTask ? editTask.dueDate : newTask.dueDate}
+                                onChange={(date) => editTask ?
+                                    setEditTask({ ...editTask, dueDate: date}) :
+                                    setNewTask({ ...newTask, dueDate: date })
+                            }
+                                className="form-control"
+                            />
+                        </Form.Group>
+
                         <Form.Group className="mt-3">
                             <Form.Check
                                 type="checkbox"

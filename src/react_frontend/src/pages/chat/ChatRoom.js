@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../common/AuthContext';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { GoArrowLeft } from "react-icons/go";
+import { getChatRoomById } from '../api/ChatAPI';
 import './ChatRoom.css'; // CSS 파일을 import 합니다
 
 const ChatRoom = () => {
@@ -12,22 +13,43 @@ const ChatRoom = () => {
     const { username } = authState;
     const { roomId } = useParams();
     const navigate = useNavigate();
+    const [roomName, setRoomName] = useState('');
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [stompClient, setStompClient] = useState(null);
     const messagesEndRef = useRef(null);
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+        'Authorization': `Bearer ${token}`
+    };
 
     useEffect(() => {
-        const socket = new SockJS('http://localhost:8080/ws');
+
+        getChatRoomById(roomId).then((response) => {
+            setRoomName(response.name);
+        });
+    }, [roomId]);
+
+    useEffect(() => {
+        const socket = new SockJS('http://localhost:8080/ws', null, {
+            transport: {
+                websocket: {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            }
+        });
         const client = Stomp.over(socket);
 
-        client.connect({}, () => {
+
+        client.connect(headers, () => {
             client.subscribe(`/topic/${roomId}`, (msg) => {
                 const message = JSON.parse(msg.body);
                 setMessages((prevMessages) => [...prevMessages, message]);
             });
 
-            client.send(`/app/chat.addUser/${roomId}`, {}, JSON.stringify({
+            client.send(`/app/chat.addUser/${roomId}`, headers, JSON.stringify({
                 sender: username,
                 type: 'JOIN'
             }));
@@ -49,10 +71,11 @@ const ChatRoom = () => {
                 content: message,
                 type: 'CHAT'
             };
-            stompClient.send(`/app/chat.sendMessage/${roomId}`, {}, JSON.stringify(chatMessage));
+            stompClient.send(`/app/chat.sendMessage/${roomId}`, headers, JSON.stringify(chatMessage));
             setMessage('');
         }
     };
+
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -64,8 +87,8 @@ const ChatRoom = () => {
                 <Col md={6}>
                     <Card className="mt-3">
                         <Card.Header>
-                            <GoArrowLeft onClick={() => navigate('/chatr')} style={{ cursor: 'pointer' }} />
-                             &nbsp; Chat Room: {roomId}
+                            <GoArrowLeft onClick={() => navigate('/chat')} style={{ cursor: 'pointer' }} />
+                            &nbsp; {roomName}
                         </Card.Header>
                         <Card.Body>
                             <div className="message-container">

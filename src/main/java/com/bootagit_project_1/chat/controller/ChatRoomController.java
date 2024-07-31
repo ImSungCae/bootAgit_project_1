@@ -22,4 +22,9 @@ public class ChatRoomController {
     public ChatRoom createChatRoom(@RequestBody ChatRoom chatRoom){
         return chatRoomService.createChatRoom(chatRoom);
     }
+
+    @GetMapping("/{roomId}")
+    public ChatRoom getChatRoom(@PathVariable Long roomId){
+        return chatRoomService.getChatRoomById(roomId);
+    }
 }

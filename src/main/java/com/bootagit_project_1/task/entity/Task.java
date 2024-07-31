@@ -8,7 +8,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Entity
@@ -32,15 +34,30 @@ public class Task {
     private String description;
 
     @CreationTimestamp
-    @Column
+    @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
-    @Column
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @NotNull
     private boolean completed;
+
+    @NotNull
+    private LocalDate dueDate;
+
+    private LocalDate completedDate;
+
+
+    public Long getDaysUntilDue(){
+        if(completedDate != null){
+            return ChronoUnit.DAYS.between(createdAt.toLocalDate(), completedDate);
+        } else if (completed) {
+            return ChronoUnit.DAYS.between(createdAt.toLocalDate(),LocalDate.now());
+        }else {
+            return ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+        }
+    }
 
 
 

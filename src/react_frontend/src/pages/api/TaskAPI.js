@@ -27,6 +27,7 @@ export const fetchTasks = async (username) => {
 // 할 일 생성 API
 export const createTask = async (task, username) => {
     try {
+        console.log(task);
         const response = await TaskApi.post(``, task);
         return response.data;
     } catch (error) {

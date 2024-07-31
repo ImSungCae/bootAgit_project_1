@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Form, Button, ListGroup, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Form, Button, ListGroup, Container, Modal } from 'react-bootstrap';
+import { getChatRooms, createChatRoom } from '../api/ChatAPI';
 
 const ChatRoomList = () => {
     const [chatRooms, setChatRooms] = useState([]);
@@ -13,24 +13,23 @@ const ChatRoomList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('/api/chatrooms').then((response) => {
+        getChatRooms().then((response) => {
             setChatRooms(response.data);
+        }).catch(error => {
+            console.error("Error fetching chat rooms:", error);
         });
     }, []);
 
-    const createRoom = () => {
-        axios.post('/api/chatrooms', {
-            name: roomName,
-            maxUsers: maxUsers,
-            isPublic: isPublic,
-            password: isPublic ? '' : password
-        }).then((response) => {
+    const handleCreateRoom = () => {
+        createChatRoom(roomName, maxUsers, isPublic, password).then((response) => {
             setChatRooms([...chatRooms, response.data]);
             setShowModal(false);
             setRoomName('');
             setMaxUsers(10);
             setIsPublic(true);
             setPassword('');
+        }).catch(error => {
+            console.error("Error creating chat room:", error);
         });
     };
 
@@ -97,7 +96,7 @@ const ChatRoomList = () => {
                     <Button variant="secondary" onClick={() => setShowModal(false)}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={createRoom}>
+                    <Button variant="primary" onClick={handleCreateRoom}>
                         Create Room
                     </Button>
                 </Modal.Footer>

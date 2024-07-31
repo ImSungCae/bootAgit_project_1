@@ -33,15 +33,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         // 해당 API에 대해서는 모든 요청을 허가
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/ws/**").permitAll()
-                        .requestMatchers("/socket.io/**").permitAll()
-                        .requestMatchers("/api/v1/user/**").authenticated()
-                        .requestMatchers("/api/v1/task").authenticated()
-                        .requestMatchers("/api/v1/task/**").authenticated()
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/ws/**"
+                        ).permitAll()
+//                        .requestMatchers("/ws/**").permitAll()
+//                        .requestMatchers("/socket.io/**").permitAll()
+//                        .requestMatchers("/api/v1/user/**").authenticated()
+//                        .requestMatchers("/api/v1/task").authenticated()
+//                        .requestMatchers("/api/v1/task/**").authenticated()
                         // USER 권한이 있어야 요청할 수 있음
                         // hasRole 의 경우 앞에 접두사 "ROLE_"을 자동적으로 붙여서 체크하기 때문에 DB의 데이터가 ROLE_USER 이여야함
                         // 문자열 그대로 USER을 체크하고싶으면 hasAuthority()을 사용해야함
@@ -49,7 +51,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/test").hasRole("USER") // Checks for ROLE_USER
 
                         // 이 밖에 모든 요청에 대해서는 인증을 필요로 한다는 설정
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

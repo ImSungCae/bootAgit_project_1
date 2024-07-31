@@ -5,6 +5,7 @@ import com.bootagit_project_1.user.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,6 +17,9 @@ public class TaskDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean completed;
+    private LocalDate dueDate;
+    private LocalDate completedDate;
+    private Long daysUntilDue;
 
     public static TaskDto fromEntity(Task task) {
         return TaskDto.builder()
@@ -25,6 +29,9 @@ public class TaskDto {
                 .createdAt(task.getCreatedAt())
                 .updatedAt(task.getUpdatedAt())
                 .completed(task.isCompleted())
+                .dueDate(task.getDueDate())
+                .completedDate(task.getCompletedDate())
+                .daysUntilDue(task.getDaysUntilDue())
                 .build();
     }
 
@@ -37,6 +44,8 @@ public class TaskDto {
                 .updatedAt(dto.getUpdatedAt())
                 .completed(dto.isCompleted())
                 .user(user)
+                .dueDate(dto.getDueDate())
+                .completedDate(dto.getCompletedDate())
                 .build();
     }
 }

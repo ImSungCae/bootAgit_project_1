@@ -13,7 +13,6 @@ public class ChatController {
     @SendTo("/topic/{roomId}")
     public ChatMessage sendMessage(ChatMessage message, @DestinationVariable String roomId) {
         message.setRoomId(roomId); // roomId 설정
-        System.out.println(roomId);
         return message;
     }
 
