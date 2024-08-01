@@ -37,7 +37,8 @@ public class SecurityConfig {
                         // 해당 API에 대해서는 모든 요청을 허가
                         .requestMatchers(
                                 "/api/v1/auth/**",
-                                "/ws/**"
+                                "/ws/**",
+                                "/files/**"
                         ).permitAll()
 //                        .requestMatchers("/ws/**").permitAll()
 //                        .requestMatchers("/socket.io/**").permitAll()

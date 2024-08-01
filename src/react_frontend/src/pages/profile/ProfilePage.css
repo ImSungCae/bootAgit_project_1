@@ -1,0 +1,23 @@
+.profile-image-container {
+    position: relative;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-image-icon {
+    position: absolute;
+    bottom: 0px;  /* 아이콘의 위치를 조정합니다 */
+    left: 0px;  /* 아이콘의 위치를 조정합니다 */
+    background: white;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 40px;  /* 아이콘의 크기를 조정합니다 */
+    border-radius: 50%;  /* 아이콘에 둥근 테두리를 추가합니다 */
+    border: 2px solid #ddd;  /* 아이콘에 테두리를 추가합니다 */
+    color: #333;  /* 아이콘의 색상을 설정합니다 */
+}
