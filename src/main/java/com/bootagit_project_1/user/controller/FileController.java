@@ -1,5 +1,6 @@
 package com.bootagit_project_1.user.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/files")
+@Tag(name = "File API")
 public class FileController {
 
     @Value("${file.upload-dir}")

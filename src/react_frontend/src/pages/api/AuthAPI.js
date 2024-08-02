@@ -1,10 +1,11 @@
 import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const GRANT_TYPE = localStorage.getItem("grantType");
 let ACCESS_TOKEN = localStorage.getItem("accessToken");
 
 export const AuthApi = axios.create({
-    baseURL : 'http://localhost:8080/api/v1/auth',
+    baseURL : `${apiUrl}/api/v1/auth`,
     headers : {
         'Content-Type' : 'application/json',
         'Authorization' : `${GRANT_TYPE} ${ACCESS_TOKEN}`,

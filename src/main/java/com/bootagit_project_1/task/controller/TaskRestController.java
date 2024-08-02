@@ -2,6 +2,7 @@ package com.bootagit_project_1.task.controller;
 
 import com.bootagit_project_1.task.dto.TaskDto;
 import com.bootagit_project_1.task.service.TaskService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/task")
+@Tag(name = "Task API")
 public class TaskRestController {
     private final TaskService taskService;
 

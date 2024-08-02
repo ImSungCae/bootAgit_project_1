@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON bootAgit_db.* TO 'user'@'%';
+FLUSH PRIVILEGES;

@@ -1,12 +1,14 @@
 package com.bootagit_project_1.chat.controller;
 
 import com.bootagit_project_1.chat.dto.ChatMessage;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 @Controller
+@Tag(name = "Chat API")
 public class ChatController {
 
     @MessageMapping("/chat.sendMessage/{roomId}")

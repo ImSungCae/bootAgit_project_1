@@ -7,6 +7,7 @@ import com.bootagit_project_1.user.dto.LoginDto;
 import com.bootagit_project_1.user.dto.RegisterDto;
 import com.bootagit_project_1.user.dto.UserDto;
 import com.bootagit_project_1.user.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Auth API")
 public class AuthRestController {
 
     private final AuthService authService;

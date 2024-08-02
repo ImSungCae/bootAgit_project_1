@@ -35,9 +35,11 @@ public class Task {
 
     @CreationTimestamp
     @Column(updatable = false)
+    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
+    @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @NotNull

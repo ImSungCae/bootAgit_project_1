@@ -8,7 +8,9 @@ import { GoArrowLeft } from "react-icons/go";
 import { getChatRoomById } from '../api/ChatAPI';
 import './ChatRoom.css'; // CSS 파일을 import 합니다
 
+
 const ChatRoom = () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const { authState } = useUser();
     const { username } = authState;
     const { roomId } = useParams();
@@ -31,7 +33,7 @@ const ChatRoom = () => {
     }, [roomId]);
 
     useEffect(() => {
-        const socket = new SockJS('http://localhost:8080/ws', null, {
+        const socket = new SockJS(`${apiUrl}/ws`, null, {
             transport: {
                 websocket: {
                     headers: {

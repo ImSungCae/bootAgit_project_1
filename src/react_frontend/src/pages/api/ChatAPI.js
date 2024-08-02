@@ -1,11 +1,12 @@
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const GRANT_TYPE = localStorage.getItem("grantType");
 const ACCESS_TOKEN = localStorage.getItem("accessToken");
 const REFRESH_TOKEN = localStorage.getItem("refreshToken");
 
 export const ChatApi = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: `${apiUrl}`,
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `${GRANT_TYPE} ${ACCESS_TOKEN}`,

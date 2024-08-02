@@ -87,7 +87,7 @@ const ProfilePage = () => {
                     <label className="form-label">프로필 이미지</label>
                     <div className="profile-image-container">
                         <img
-                            src={profileImageUrl ? `http://localhost:8080/files/${profileImageUrl}` : '/default-profile.png'}
+                            src={profileImageUrl ? `http://localhost:8090/files/${profileImageUrl}` : '/default-profile.png'}
                             alt="Profile"
                             className="profile-image"
                         />

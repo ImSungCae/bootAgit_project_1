@@ -1,0 +1,57 @@
+version: "3.7"
+
+services:
+  db-mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql_db:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - springboot-mysql-net
+    healthcheck:
+      test: ['CMD','mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD']
+      interval: 5s # interval은 헬스 실시 간격을 의미
+      timeout: 1s # timeout은 그때까지 응답을 받지 못하면 실패로 간주하는 제한 시간
+      retries: 2 # retries는 컨테이너 상태를 이상으로 간주할 때까지 필요한 연속 실패 횟수를 의미
+      start_period: 5s # start_period 는 컨테이너 실행 후 첫 헬스 체크를 실시하는 시간 간격을 의미 애플리케이션을 시작하는 데 시간이 오래 걸리는 경우
+  springboot-mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8090:8080
+    depends_on:
+      db-mysql:
+        condition: service_healthy
+    networks:
+      - springboot-mysql-net
+# wait-for-it.sh 사용시
+#    command:
+#      - bash
+#      - -c
+#      - |
+#        ./wait-for-it.sh db-mysql:3306 -s -t 100
+#        java -jar /app.jar
+
+  react-frontend:
+    build:
+      context: ./src/react_frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3030:3000
+    networks:
+      - springboot-mysql-net
+networks:
+  springboot-mysql-net:
+    driver: bridge
+
+volumes:
+  mysql_db:
+    external: true

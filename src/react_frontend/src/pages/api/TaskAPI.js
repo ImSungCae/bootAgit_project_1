@@ -1,11 +1,12 @@
 import axios from 'axios';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const GRANT_TYPE = localStorage.getItem("grantType");
 let ACCESS_TOKEN = localStorage.getItem("accessToken");
 let REFRESH_TOKEN = localStorage.getItem("refreshToken");
 
 export const TaskApi = axios.create({
-    baseURL : 'http://localhost:8080/api/v1/task',
+    baseURL : `${apiUrl}/api/v1/task`,
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `${GRANT_TYPE} ${ACCESS_TOKEN}`,

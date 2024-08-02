@@ -38,7 +38,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/v1/auth/**",
                                 "/ws/**",
-                                "/files/**"
+                                "/files/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs"
                         ).permitAll()
 //                        .requestMatchers("/ws/**").permitAll()
 //                        .requestMatchers("/socket.io/**").permitAll()
@@ -84,7 +86,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("http://localhost:3030")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .exposedHeaders("location")
                         .allowedHeaders("*")

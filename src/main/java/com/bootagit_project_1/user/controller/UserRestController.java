@@ -5,6 +5,7 @@ import com.bootagit_project_1.user.dto.UserDto;
 import com.bootagit_project_1.user.dto.UserProfileDto;
 import com.bootagit_project_1.user.entity.UserProfile;
 import com.bootagit_project_1.user.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
+@Tag(name = "User API")
 public class UserRestController {
     private final UserService userService;
 

@@ -52,6 +52,7 @@ public class User{
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfile profile;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Friend> friends = new ArrayList<>();
 
