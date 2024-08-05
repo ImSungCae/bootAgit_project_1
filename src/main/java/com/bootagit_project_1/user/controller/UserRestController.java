@@ -3,6 +3,7 @@ package com.bootagit_project_1.user.controller;
 import com.bootagit_project_1.user.dto.ChangePasswordDto;
 import com.bootagit_project_1.user.dto.UserDto;
 import com.bootagit_project_1.user.dto.UserProfileDto;
+import com.bootagit_project_1.user.entity.Friend;
 import com.bootagit_project_1.user.entity.UserProfile;
 import com.bootagit_project_1.user.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -97,6 +98,11 @@ public class UserRestController {
         String username = userDetails.getUsername();
         return ResponseEntity.ok(userService.getFriendList(username));
     }
+//    /* Elastic Search 친구 조회 */
+//    @GetMapping("/search")
+//    public ResponseEntity<List<Friend>> search(@RequestParam("username") String username){
+//        return ResponseEntity.ok(userService.search(username));
+//    }
 
 
 }

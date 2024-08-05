@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -155,6 +156,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    /* Elastic Search 친구 조회 */
+//    public List<Friend> search(@RequestParam("username") String username){
+//        return friendRepository.findByUsername(username);
+//    }
 
 
 

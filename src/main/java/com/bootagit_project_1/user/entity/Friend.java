@@ -22,4 +22,7 @@ public class Friend {
     @JoinColumn(name = "friend_id")
     private User friend;
 
+    @ManyToOne
+    @JoinColumn(name = "user_profile_id")
+    private UserProfile userProfile;
 }

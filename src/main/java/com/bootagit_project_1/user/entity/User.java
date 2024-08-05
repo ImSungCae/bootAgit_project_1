@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,13 +23,18 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
+//@Document(indexName = "users")
 public class User{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+//    @org.springframework.data.annotation.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Field(name = "id", type = FieldType.Keyword)
     private Long id;
 
     @NotNull
     @Size(min = 3, message = "Username should have at least 3 characters")
+//    @Field(type = FieldType.Keyword)
     private String username;
 
     @NotNull

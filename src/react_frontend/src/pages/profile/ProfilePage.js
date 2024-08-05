@@ -6,8 +6,11 @@ import ChangeEmail from "./ChangeEmail";
 import { deleteUser } from "../api/UserAPI";
 import { FaImage } from "react-icons/fa6";
 import "./ProfilePage.css"
+import logo from "../../logo.svg"
+
 
 const ProfilePage = () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const { authState } = useUser();
     const { username } = authState;
     const [profileImage, setProfileImage] = useState(null);
@@ -87,7 +90,7 @@ const ProfilePage = () => {
                     <label className="form-label">프로필 이미지</label>
                     <div className="profile-image-container">
                         <img
-                            src={profileImageUrl ? `http://localhost:8090/files/${profileImageUrl}` : '/default-profile.png'}
+                            src={profileImageUrl ? `${apiUrl}/files/${profileImageUrl}` : `${logo}`}
                             alt="Profile"
                             className="profile-image"
                         />

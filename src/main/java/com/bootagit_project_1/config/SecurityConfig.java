@@ -54,7 +54,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/test").hasRole("USER") // Checks for ROLE_USER
 
                         // 이 밖에 모든 요청에 대해서는 인증을 필요로 한다는 설정
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
@@ -86,11 +86,12 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3030")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedOrigins("http://localhost:3000", "http://localhost:3030")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .exposedHeaders("location")
                         .allowedHeaders("*")
                         .allowCredentials(true);
+
             }
         };
     }
